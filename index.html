@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,64 +11,63 @@
       background: #ffccdd;
       overflow: hidden;
       height: 100vh;
-    }
+    }.container {
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin-top: 50px;
+}
 
-    .container {
-      padding: 20px;
-      max-width: 400px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      margin-top: 50px;
-    }
+h1 {
+  text-align: center;
+  color: #d63384;
+}
 
-    h1 {
-      text-align: center;
-      color: #d63384;
-    }
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+}
 
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1em;
-    }
+button {
+  width: 100%;
+  padding: 15px;
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 1.1em;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      background: #ff69b4;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      font-weight: bold;
-      margin-top: 15px;
-      font-size: 1.1em;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
-    }
+button:active {
+  transform: scale(0.97);
+  background: #e60073;
+}
 
-    button:active {
-      transform: scale(0.97);
-      background: #e60073;
-    }
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: fall 3s linear infinite;
+}
 
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: fall 3s linear infinite;
-    }
+@keyframes fall {
+  0% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
 
-    @keyframes fall {
-      0% { transform: translateY(-10px); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
-    }
   </style>
 </head>
 <body>
@@ -77,18 +75,12 @@
     <h1>Confes ZanDKav</h1>
     <textarea id="pesan" placeholder="Tulis isi pesannya..."></textarea>
     <input type="text" id="nama" placeholder="Nama pengirim" />
-    <input type="text" id="linktele" placeholder="Link Telegram target (contoh: https://t.me/zandkav)" />
+    <input type="text" id="usertele" placeholder="Username Telegram target (contoh: @zandkav)" />
     <button onclick="kirimPesan()">💌 Kirim Confes</button>
-  </div>
-
-  <!-- Autoplay + loop lagu -->
-  <audio autoplay loop>
-    <source src="https://files.catbox.moe/m7e8ib.m4a" type="audio/mp4">
+  </div>  <!-- Autoplay + loop lagu dari file lokal Vercel -->  <audio autoplay loop>
+    <source src="/audio/confes-audio.m4a" type="audio/mp4">
     Browser kamu tidak mendukung audio autoplay.
-  </audio>
-
-  <!-- Animasi bintang jatuh -->
-  <script>
+  </audio>  <!-- Animasi bintang jatuh -->  <script>
     function randomStar() {
       const star = document.createElement("div");
       star.className = "star";
@@ -98,23 +90,22 @@
       setTimeout(() => star.remove(), 3000);
     }
     setInterval(randomStar, 100);
-  </script>
-
-  <!-- Bot Telegram -->
-  <script>
+  </script>  <!-- Bot Telegram -->  <script>
     function kirimPesan() {
       const pesan = document.getElementById('pesan').value;
       const nama = document.getElementById('nama').value;
-      const linktele = document.getElementById('linktele').value;
+      const usertele = document.getElementById('usertele').value;
 
-      const teksConfes = `💌 *Confes buat kamu!*\n\n📝 Pesan: ${pesan}\n👤 Dari: ${nama}\n\n👉 Buka link: ${linktele}`;
-      const teksLog = `📥 *Confes Terkirim*\n\n📝 Isi: ${pesan}\n👤 Dari: ${nama}\n📎 Ke: ${linktele}`;
+      const teksConfes = `💌 *Confes buat kamu!*\n\n📝 Pesan: ${pesan}\n👤 Dari: ${nama}`;
+      const teksLog = `📅 *Confes Terkirim*\n\n📝 Isi: ${pesan}\n👤 Dari: ${nama}\n📌 Ke: ${usertele}`;
 
-      // Hanya kirim ke owner log
+      // Kirim ke target (hanya jika username valid dan user sudah pernah chat bot)
+      fetch(`https://api.telegram.org/bot7517010272:AAHUdO3X1WM_zXNHP8eqtfhGNmF0w-6EfxA/sendMessage?chat_id=${usertele}&text=${encodeURIComponent(teksConfes)}&parse_mode=Markdown`);
+
+      // Kirim ke owner log
       fetch(`https://api.telegram.org/bot7517010272:AAHUdO3X1WM_zXNHP8eqtfhGNmF0w-6EfxA/sendMessage?chat_id=7849712634&text=${encodeURIComponent(teksLog)}&parse_mode=Markdown`);
 
-      alert("✅ Confes berhasil dikirim!\nLink target disertakan.");
+      alert("\u2705 Confes berhasil dikirim!");
     }
-  </script>
-</body>
+  </script></body>
 </html>
