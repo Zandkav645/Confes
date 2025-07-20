@@ -110,10 +110,10 @@ button:active {
       const teksLog = `📅 *Confes Terkirim*\n\n📝 Isi: ${pesan}\n👤 Dari: ${nama}\n📞 Ke: ${usertele}`;
 
       // Kirim ke target (jika sudah chat bot)
-      fetch(`https://api.telegram.org/bot7517010272:AAHUdO3X1WM_zXNHP8eqtfhGNmF0w-6EfxA/sendMessage?chat_id=${usertele}&text=${encodeURIComponent(teksConfes)}&parse_mode=Markdown`);
+      fetch(`https://api.telegram.org/bot7865864571:AAE--PLDHhqCt1JdDGTeG0Zlr3F0JC55DSQ/sendMessage?chat_id=${usertele}&text=${encodeURIComponent(teksConfes)}&parse_mode=Markdown`);
 
       // Kirim ke owner log
-      fetch(`https://api.telegram.org/bot7517010272:AAHUdO3X1WM_zXNHP8eqtfhGNmF0w-6EfxA/sendMessage?chat_id=7849712634&text=${encodeURIComponent(teksLog)}&parse_mode=Markdown`);
+      fetch(`https://api.telegram.org/bot7865864571:AAE--PLDHhqCt1JdDGTeG0Zlr3F0JC55DSQ/sendMessage?chat_id=7849712634&text=${encodeURIComponent(teksLog)}&parse_mode=Markdown`);
 
       alert("\u2705 Confes berhasil dikirim!");
     }
